@@ -1,150 +1,66 @@
-const colors = [
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "blue",
-    "purple"
-];
-
-let selectedNumber = 4;
-let rolling = false;
-
-const diceArea = document.getElementById("diceArea");
 const numberButtons = document.querySelectorAll(".number-btn");
 const rollButton = document.getElementById("rollButton");
+const diceArea = document.getElementById("diceArea");
+
+let selectedNumber = 4;
+
+const colors = [
+    "#ff0000", // KIRMIZI
+    "#ff7b00", // TURUNCU
+    "#ffff00", // SARI
+    "#00ff22", // YEŞİL
+    "#008cff", // MAVİ
+    "#a000ff"  // MOR
+];
+
+numberButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        selectedNumber = Number(button.dataset.number);
+
+        numberButtons.forEach(btn => {
+            btn.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+
+        createDiceDots(selectedNumber);
+    });
+});
 
 
-/* =========================
-   YUVARLAKLARI OLUŞTUR
-========================= */
-
-function createCircles() {
-
+function createDiceDots(number) {
     diceArea.innerHTML = "";
 
-    const circles = [];
+    for (let i = 0; i < number; i++) {
+        const dot = document.createElement("div");
 
-    for (let i = 0; i < selectedNumber; i++) {
+        dot.className = "dice-dot";
 
-        const circle = document.createElement("div");
-
-        circle.className = "result-circle";
-
-        diceArea.appendChild(circle);
-
-        circles.push(circle);
+        diceArea.appendChild(dot);
     }
-
-    positionCircles(circles);
 }
 
-
-/* =========================
-   YUVARLAKLARI DAİRENİN
-   BOYUTUNA GÖRE YERLEŞTİR
-========================= */
-
-function positionCircles(circles) {
-
-    const size = diceArea.clientWidth;
-
-    let circleSize;
-
-    if (selectedNumber === 1) {
-        circleSize = size * 0.25;
-    } else if (selectedNumber === 2) {
-        circleSize = size * 0.22;
-    } else if (selectedNumber === 3) {
-        circleSize = size * 0.20;
-    } else if (selectedNumber === 4) {
-        circleSize = size * 0.19;
-    } else if (selectedNumber === 5) {
-        circleSize = size * 0.17;
-    } else {
-        circleSize = size * 0.16;
-    }
-
-    circleSize = Math.max(45, circleSize);
-
-    const center = size / 2;
-
-    const radius = size * 0.27;
-
-    circles.forEach((circle, index) => {
-
-        circle.style.width = circleSize + "px";
-        circle.style.height = circleSize + "px";
-
-        let angle;
-
-        if (selectedNumber === 1) {
-            angle = 0;
-        } else {
-            angle =
-                (Math.PI * 2 * index / selectedNumber)
-                - Math.PI / 2;
-        }
-
-        const x =
-            center +
-            Math.cos(angle) * radius;
-
-        const y =
-            center +
-            Math.sin(angle) * radius;
-
-        circle.style.left = x + "px";
-        circle.style.top = y + "px";
-    });
-}
-
-
-/* =========================
-   RASTGELE RENK
-========================= */
 
 function randomColor() {
-
-    const randomIndex =
-        Math.floor(Math.random() * colors.length);
-
-    return colors[randomIndex];
+    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 
-/* =========================
-   TIK SESİ
-========================= */
-
 function playClickSound() {
-
     const AudioContext =
-        window.AudioContext ||
-        window.webkitAudioContext;
+        window.AudioContext || window.webkitAudioContext;
 
-    if (!AudioContext) {
-        return;
-    }
+    if (!AudioContext) return;
 
     const audioContext = new AudioContext();
 
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = "square";
-
     oscillator.frequency.setValueAtTime(
-        900,
+        650,
         audioContext.currentTime
-    );
-
-    oscillator.frequency.exponentialRampToValueAtTime(
-        250,
-        audioContext.currentTime + 0.06
     );
 
     gain.gain.setValueAtTime(
@@ -154,7 +70,7 @@ function playClickSound() {
 
     gain.gain.exponentialRampToValueAtTime(
         0.001,
-        audioContext.currentTime + 0.07
+        audioContext.currentTime + 0.08
     );
 
     oscillator.connect(gain);
@@ -163,21 +79,46 @@ function playClickSound() {
     oscillator.start();
 
     oscillator.stop(
-        audioContext.currentTime + 0.07
+        audioContext.currentTime + 0.08
     );
 }
 
 
-/* =========================
-   SAYI SEÇME
-========================= */
+rollButton.addEventListener("click", () => {
 
-numberButtons.forEach(button => {
+    playClickSound();
 
-    button.addEventListener("click", () => {
+    diceArea.classList.remove("rolling");
 
-        if (rolling) {
-            return;
-        }
+    void diceArea.offsetWidth;
 
-        selectedNumber =
+    diceArea.classList.add("rolling");
+
+    const dots = document.querySelectorAll(".dice-dot");
+
+    dots.forEach(dot => {
+        dot.style.borderColor = randomColor();
+        dot.style.boxShadow =
+            "0 0 10px " +
+            dot.style.borderColor +
+            ", 0 0 25px " +
+            dot.style.borderColor;
+    });
+
+    setTimeout(() => {
+        dots.forEach(dot => {
+            dot.style.borderColor = randomColor();
+
+            dot.style.boxShadow =
+                "0 0 10px " +
+                dot.style.borderColor +
+                ", 0 0 25px " +
+                dot.style.borderColor;
+        });
+
+        diceArea.classList.remove("rolling");
+    }, 700);
+});
+
+
+createDiceDots(selectedNumber);
