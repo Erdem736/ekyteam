@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>EKY DICE</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game">
+
+        <h1>EKY DICE</h1>
+
+        <section class="number-panel">
+
+            <div class="section-title">SELECT NUMBER</div>
+
+            <div class="number-buttons">
+                <button class="number-btn" data-number="1">1</button>
+                <button class="number-btn" data-number="2">2</button>
+                <button class="number-btn" data-number="3">3</button>
+                <button class="number-btn" data-number="4">4</button>
+                <button class="number-btn" data-number="5">5</button>
+                <button class="number-btn" data-number="6">6</button>
+            </div>
+
+        </section>
+
+        <button id="rollButton" class="roll-button">ROLL</button>
+
+        <section class="dice-area">
+
+            <div id="diceCircle" class="dice-circle">
+
+                <div class="dice-dots" id="diceDots">
+                    <!-- Noktalar JavaScript ile oluşturulacak -->
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
