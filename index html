@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EKY DICE</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: #000;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+    }
+
+    .game {
+        width: 100%;
+        max-width: 650px;
+        padding: 25px 15px 40px;
+        text-align: center;
+    }
+
+    /* BAŞLIK */
+    .title {
+        font-size: clamp(45px, 12vw, 85px);
+        font-weight: 900;
+        letter-spacing: 4px;
+        color: #ff6500;
+        text-shadow:
+            0 0 5px #ff6500,
+            0 0 15px #ff6500,
+            0 0 30px #ff3300;
+        margin-bottom: 15px;
+    }
+
+    /* SAYI SEÇİM ALANI */
+    .number-box {
+        border: 3px solid #ff1010;
+        border-radius: 12px;
+        padding: 15px 10px 20px;
+        box-shadow:
+            0 0 7px #ff1010,
+            inset 0 0 8px rgba(255, 0, 0, 0.25);
+    }
+
+    .number-title {
+        color: #ff2222;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+    }
+
+    .numbers {
+        display: flex;
+        justify-content: center;
+        gap: clamp(8px, 3vw, 20px);
+    }
+
+    .number-btn {
+        width: clamp(52px, 11vw, 72px);
+        height: clamp(52px, 11vw, 72px);
+        border-radius: 50%;
+        background: #050505;
+        border: 3px solid #ff1010;
+        color: #fff;
+        font-size: clamp(20px, 5vw, 30px);
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow:
+            0 0 7px #ff1010,
+            inset 0 0 8px rgba(255, 0, 0, 0.2);
+        transition: 0.2s;
+    }
+
+    .number-btn:hover {
+        transform: scale(1.08);
+    }
+
+    .number-btn.selected {
+        background: #ff1010;
+        color: #fff;
+        box-shadow:
+            0 0 10px #ff1010,
+            0 0 25px #ff1010,
+            inset 0 0 10px #fff;
+    }
+
+    /* ROLL */
+    .roll-btn {
+        width: 100%;
+        height: 82px;
+        margin-top: 15px;
+        border-radius: 10px;
+        border: 3px solid #ff1010;
+        background: #000;
+        color: #ff1111;
+        font-size: clamp(35px, 8
