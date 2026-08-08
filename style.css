@@ -9,114 +9,25 @@ body {
     padding: 0;
     width: 100%;
     min-height: 100%;
-    background: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
 .game {
     width: min(94vw, 700px);
-    min-height: 100vh;
-    padding: 35px 12px 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
+    padding: 35px 0 50px;
+    text-align: center;
 }
 
-.title {
-    margin: 0 0 18px;
-    color: #ff4a00;
-    font-size: clamp(42px, 11vw, 78px);
+h1 {
+    margin: 0 0 25px;
+    font-size: clamp(48px, 12vw, 90px);
     font-weight: 900;
     letter-spacing: 4px;
-    text-align: center;
-    text-shadow:
-        0 0 8px #ff2200,
-        0 0 20px #ff2200,
-        0 0 40px #ff6600;
-}
-
-.number-box {
-    width: 100%;
-    border: 3px solid #ff1515;
-    border-radius: 12px;
-    padding: 18px 12px 20px;
-    box-shadow:
-        0 0 8px #ff0000,
-        inset 0 0 8px #ff0000;
-}
-
-.number-title {
-    margin-bottom: 14px;
-    color: #ff1c1c;
-    font-size: clamp(15px, 3.5vw, 22px);
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-align: center;
-    text-shadow: 0 0 8px #ff0000;
-}
-
-.numbers {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
-}
-
-.number-btn {
-    aspect-ratio: 1;
-    border: 3px solid #ff1717;
-    border-radius: 50%;
-    background: #050505;
-    color: white;
-    font-size: clamp(20px, 5vw, 34px);
-    font-weight: 900;
-    cursor: pointer;
-    box-shadow:
-        0 0 7px #ff0000,
-        inset 0 0 5px #ff0000;
-    transition: 0.15s ease;
-}
-
-.number-btn:active {
-    transform: scale(0.92);
-}
-
-.number-btn.selected {
-    background: #ff1818;
-    color: #fff;
-    box-shadow:
-        0 0 12px #ff0000,
-        0 0 30px #ff0000,
-        inset 0 0 12px #ff7777;
-}
-
-.roll-btn {
-    width: 100%;
-    min-height: 78px;
-    margin-top: 16px;
-    border: 3px solid #ff1717;
-    border-radius: 12px;
-    background: #050505;
-    color: #ff1717;
-    font-size: clamp(38px, 9vw, 58px);
-    font-weight: 900;
-    letter-spacing: 3px;
-    cursor: pointer;
-    text-shadow: 0 0 10px #ff0000;
-    box-shadow:
-        0 0 8px #ff0000,
-        inset 0 0 8px #ff0000;
-    transition: 0.15s ease;
-}
-
-.roll-btn:active {
-    transform: scale(0.98);
-    background: #
+    color: #ff5
