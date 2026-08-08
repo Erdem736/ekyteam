@@ -1,20 +1,60 @@
+// EKY DICE - Ana JavaScript
+
 const numberButtons = document.querySelectorAll(".number-btn");
 const rollButton = document.getElementById("rollButton");
-const diceArea = document.getElementById("diceArea");
+const diceDots = document.getElementById("diceDots");
 
 let selectedNumber = 4;
+let isRolling = false;
 
 const colors = [
-    "#ff0000", // KIRMIZI
-    "#ff7b00", // TURUNCU
-    "#ffff00", // SARI
-    "#00ff22", // YEŞİL
-    "#008cff", // MAVİ
-    "#a000ff"  // MOR
+    {
+        name: "SARI",
+        color: "#ffff00"
+    },
+    {
+        name: "MOR",
+        color: "#bf00ff"
+    },
+    {
+        name: "KIRMIZI",
+        color: "#ff0000"
+    },
+    {
+        name: "TURUNCU",
+        color: "#ff7a00"
+    },
+    {
+        name: "MAVİ",
+        color: "#008cff"
+    },
+    {
+        name: "YEŞİL",
+        color: "#00ff22"
+    }
 ];
 
+// Zarın içindeki noktaları oluştur
+function createDots(number) {
+    diceDots.innerHTML = "";
+    diceDots.dataset.count = number;
+
+    for (let i = 0; i < number; i++) {
+        const dot = document.createElement("div");
+        dot.className = "dice-dot";
+
+        diceDots.appendChild(dot);
+    }
+}
+
+// Seçilen sayıyı değiştir
 numberButtons.forEach(button => {
     button.addEventListener("click", () => {
+
+        if (isRolling) {
+            return;
+        }
+
         selectedNumber = Number(button.dataset.number);
 
         numberButtons.forEach(btn => {
@@ -23,34 +63,18 @@ numberButtons.forEach(button => {
 
         button.classList.add("selected");
 
-        createDiceDots(selectedNumber);
+        createDots(selectedNumber);
     });
 });
 
-
-function createDiceDots(number) {
-    diceArea.innerHTML = "";
-
-    for (let i = 0; i < number; i++) {
-        const dot = document.createElement("div");
-
-        dot.className = "dice-dot";
-
-        diceArea.appendChild(dot);
-    }
-}
-
-
-function randomColor() {
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-
+// Tık sesi oluştur
 function playClickSound() {
     const AudioContext =
         window.AudioContext || window.webkitAudioContext;
 
-    if (!AudioContext) return;
+    if (!AudioContext) {
+        return;
+    }
 
     const audioContext = new AudioContext();
 
@@ -59,12 +83,17 @@ function playClickSound() {
 
     oscillator.type = "square";
     oscillator.frequency.setValueAtTime(
-        650,
+        900,
         audioContext.currentTime
     );
 
+    oscillator.frequency.exponentialRampToValueAtTime(
+        300,
+        audioContext.currentTime + 0.08
+    );
+
     gain.gain.setValueAtTime(
-        0.12,
+        0.15,
         audioContext.currentTime
     );
 
@@ -77,48 +106,45 @@ function playClickSound() {
     gain.connect(audioContext.destination);
 
     oscillator.start();
-
-    oscillator.stop(
-        audioContext.currentTime + 0.08
-    );
+    oscillator.stop(audioContext.currentTime + 0.08);
 }
 
+// Rastgele renk seç
+function getRandomColor() {
+    const randomIndex = Math.floor(
+        Math.random() * colors.length
+    );
 
-rollButton.addEventListener("click", () => {
+    return colors[randomIndex];
+}
 
-    playClickSound();
-
-    diceArea.classList.remove("rolling");
-
-    void diceArea.offsetWidth;
-
-    diceArea.classList.add("rolling");
-
+// Noktaların rengini değiştir
+function setDotsColor(color) {
     const dots = document.querySelectorAll(".dice-dot");
 
     dots.forEach(dot => {
-        dot.style.borderColor = randomColor();
-        dot.style.boxShadow =
-            "0 0 10px " +
-            dot.style.borderColor +
-            ", 0 0 25px " +
-            dot.style.borderColor;
+        dot.style.color = color;
+        dot.style.background = color;
+
+        dot.style.boxShadow = `
+            0 0 8px ${color},
+            0 0 20px ${color},
+            0 0 35px ${color}
+        `;
     });
+}
 
-    setTimeout(() => {
-        dots.forEach(dot => {
-            dot.style.borderColor = randomColor();
+// Yuvarlakları hareket ettir
+function moveDotsRandomly() {
+    const dots = document.querySelectorAll(".dice-dot");
 
-            dot.style.boxShadow =
-                "0 0 10px " +
-                dot.style.borderColor +
-                ", 0 0 25px " +
-                dot.style.borderColor;
-        });
+    dots.forEach(dot => {
+        const x = 25 + Math.random() * 50;
+        const y = 25 + Math.random() * 50;
 
-        diceArea.classList.remove("rolling");
-    }, 700);
-});
+        dot.style.left = `${x}%`;
+        dot.style.top = `${y}%`;
+    });
+}
 
-
-createDiceDots(selectedNumber);
+// Se
